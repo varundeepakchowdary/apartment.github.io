@@ -1,0 +1,75 @@
+create database apartment;
+use apartment;
+
+CREATE TABLE `OwnerTable` (
+  
+`Id` INT NOT NULL AUTO_INCREMENT,
+ 
+`OwnerName` Varchar(50) NOT NULL,
+ 
+ `OwnerContact` VARCHAR(100) NOT NULL,
+ 
+ `OwnerAddress` Varchar(50) NOT NULL,
+ 
+  PRIMARY KEY (`Id`));
+
+
+
+CREATE TABLE `TenantTable` (
+  
+`Id` INT NOT NULL AUTO_INCREMENT,
+ 
+`TenantName` Varchar(50) NOT NULL,
+ 
+ `TenantContact` VARCHAR(100) NOT NULL,
+ 
+ `TenantAddress` Varchar(50) NOT NULL,
+ 
+ 
+ PRIMARY KEY (`Id`));
+
+
+
+
+CREATE TABLE`PaymentTable`(
+`Id` INT NOT NULL AUTO_INCREMENT ,
+`Date`date, 
+`Buildingname` Varchar(50) NOT NULL,
+`tName` Varchar(50) NOT NULL,
+`FlatNum`Varchar(15) NOT NULL,
+`PaidRent`double NOT NULL DEFAULT 0,
+Key (`Buildingname`),
+primary Key (`Id`));
+
+
+
+
+CREATE TABLE`BuildingTable`(
+`Id` INT NOT NULL AUTO_INCREMENT , 
+`BuildingName` Varchar(50) NOT NULL,
+`Address` Varchar(50) NOT NULL,
+`Owner`varchar(150) NOT NULL,
+`Floors`Varchar(15) NOT NULL,
+Key (`BuildingName`),
+primary Key (`Id`));
+
+
+CREATE TABLE `ApartmentTable`(
+`Id` INT NOT NULL AUTO_INCREMENT , 
+`Buildingname` Varchar(50) NOT NULL,
+`Flatnumber` Varchar(50) NOT NULL,
+`Tenant`varchar(150) NOT NULL,
+`Rent`DOUBLE NOT NULL DEFAULT 0,
+`StartDate`date NOT NULL,
+primary Key (`Id`), 
+
+ INDEX par_ind (Buildingname),
+  CONSTRAINT fk_branchTable FOREIGN KEY (Buildingname)
+  	REFERENCES BuildingTable (Buildingname)
+		ON DELETE CASCADE
+  		ON UPDATE CASCADE );
+
+
+SET FOREIGN_KEY_CHECKS = 0;
+truncate tableName;
+SET FOREIGN_KEY_CHECKS = 1;
